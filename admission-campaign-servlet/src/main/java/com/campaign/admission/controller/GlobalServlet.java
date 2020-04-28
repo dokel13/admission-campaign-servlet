@@ -24,7 +24,7 @@ public class GlobalServlet extends HttpServlet {
         SpecialtyDao specialtyDao = new SpecialtyDaoImpl();
         UserService userService = new UserServiceImpl(userDao);
         StudentService studentService = new StudentServiceImpl(examDao, specialtyDao, applicationDao);
-        AdminService adminService = new AdminServiceImpl(examDao, specialtyDao);
+        AdminService adminService = new AdminServiceImpl(examDao, specialtyDao, applicationDao);
 
         COMMANDS.put("home", new HomeCommand());
         COMMANDS.put("register", new RegistrationCommand(userService));
@@ -39,8 +39,9 @@ public class GlobalServlet extends HttpServlet {
         COMMANDS.put("student/rating", new RatingCommand());
         COMMANDS.put("student/results", new ResultCommand(studentService));
         COMMANDS.put("admin", new AdminHomeCommand(adminService));
-        COMMANDS.put("admin/setAdmission", new AdmissionCommand(adminService));
+        COMMANDS.put("admin/set_admission", new AdmissionCommand(adminService));
         COMMANDS.put("admin/subject", new SubjectCommand(adminService));
+        COMMANDS.put("admin/subject/save_marks", new SavingMarksCommand(adminService));
     }
 
     @Override

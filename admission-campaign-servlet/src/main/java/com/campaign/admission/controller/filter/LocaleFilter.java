@@ -12,7 +12,7 @@ import static java.lang.String.format;
 
 public class LocaleFilter implements Filter {
 
-    private static final String DEFAULT_LOCALE_PARAMETER = "?locale=en";
+    private static final String DEFAULT_LOCALE_PARAMETER = "locale=en";
     private static final String QUERY_STRING = "%s&%s";
     private static final Map<String, Locale> LOCALES = new HashMap<>();
 
@@ -27,11 +27,14 @@ public class LocaleFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         Locale locale = LOCALES.get(httpRequest.getParameter("locale"));
         if(locale == null) {
-            String redirectURI = httpRequest.getRequestURI() + DEFAULT_LOCALE_PARAMETER;
+            String redirectURI = httpRequest.getRequestURI() + "?";
             if(httpRequest.getParameterMap().size() > 0) {
-                redirectURI = format(QUERY_STRING, redirectURI, httpRequest.getQueryString());
+                redirectURI = format(QUERY_STRING, redirectURI + httpRequest.getQueryString(), DEFAULT_LOCALE_PARAMETER);
+            } else {
+                redirectURI += DEFAULT_LOCALE_PARAMETER;
             }
             ((HttpServletResponse) servletResponse).sendRedirect(redirectURI);
+
             return;
         } else {
             ((HttpServletRequest) servletRequest).getSession().setAttribute("locale", locale);

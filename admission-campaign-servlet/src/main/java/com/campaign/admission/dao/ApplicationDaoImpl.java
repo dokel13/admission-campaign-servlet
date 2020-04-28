@@ -4,12 +4,14 @@ import com.campaign.admission.dao.datasource.ConnectionPool;
 import com.campaign.admission.dao.mapper.ApplicationMapper;
 import com.campaign.admission.dao.mapper.Mapper;
 import com.campaign.admission.domain.Application;
+import com.campaign.admission.domain.Specialty;
 import com.campaign.admission.exception.DatabaseRuntimeException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -40,6 +42,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
             statement.setString(1, application.getUser().getEmail());
             statement.setString(2, application.getSpecialty().getName());
             statement.setBoolean(3, false);
+            statement.setInt(4, application.getMarkSum());
             statement.execute();
         } catch (SQLException e) {
             throw new DatabaseRuntimeException(e, "Saving application operation exception!");
@@ -77,6 +80,35 @@ public class ApplicationDaoImpl implements ApplicationDao {
             return empty();
         } catch (SQLException e) {
             throw new DatabaseRuntimeException(e, "Finding application by email operation exception!");
+        }
+    }
+
+    @Override
+    public void setAllEnrollments(Boolean enrollment) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("update.all.enrollments"))) {
+
+            statement.setBoolean(1, enrollment);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new DatabaseRuntimeException(e, "Setting all enrollments operation exception!");
+        }
+    }
+
+    @Override
+    public void setEnrollmentsBySpecialties(Boolean enrollment, List<Specialty> specialties) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("update.sorted.enrollments.by.specialties"))) {
+
+            for (Specialty specialty : specialties) {
+                statement.setBoolean(1, enrollment);
+                statement.setString(2, specialty.getName());
+                statement.setInt(3, specialty.getMaxStudentAmount());
+                statement.addBatch();
+            }
+            statement.executeBatch();
+        } catch (SQLException e) {
+            throw new DatabaseRuntimeException(e, "Setting enrollments by specialties operation exception!");
         }
     }
 }

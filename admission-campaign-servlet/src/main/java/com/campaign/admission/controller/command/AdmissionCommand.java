@@ -17,7 +17,10 @@ public class AdmissionCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         Boolean open = valueOf(request.getParameter("open"));
-        adminService.setAdmission(open);
+        if (open != null) {
+            adminService.setAdmission(open);
+        }
+        open = adminService.checkAdmission();
 
         return "redirect:/admission/api/admin?" + request.getQueryString().replace("open=" + open + "&", "");
     }

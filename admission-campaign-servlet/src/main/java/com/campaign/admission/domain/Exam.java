@@ -19,6 +19,7 @@ public class Exam {
     public static ExamBuilder builder() {
         return new ExamBuilder();
     }
+
     public Integer getId() {
         return id;
     }

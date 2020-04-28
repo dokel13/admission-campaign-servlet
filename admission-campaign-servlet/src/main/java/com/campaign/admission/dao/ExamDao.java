@@ -15,4 +15,8 @@ public interface ExamDao {
     List<Exam> findExamsByEmail(String email);
 
     List<Exam> findExamsPaginated(String subject, Integer page, Integer pageSize);
+
+    Integer findExamsCountBySubject(String subject);
+
+    void setMarks(List<Exam> exams);
 }

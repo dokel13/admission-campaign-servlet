@@ -15,11 +15,12 @@ public class SpecialtyMapper implements Mapper {
     @Override
     public Specialty map(ResultSet resultSet) throws SQLException {
         List<Requirement> requirements = new ArrayList<>();
-        while (resultSet.next()) {
+        String specialty = resultSet.getString("specialty");
+        do {
             Requirement requirement = new Requirement(resultSet.getString("subject"),
                     resultSet.getInt("mark"));
             requirements.add(requirement);
-        }
+        } while (resultSet.next() && specialty.equals(resultSet.getString("specialty")));
         resultSet.previous();
 
         return builder()

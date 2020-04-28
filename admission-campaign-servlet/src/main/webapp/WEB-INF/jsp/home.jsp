@@ -71,13 +71,13 @@
                     </div>
                     <div class="form-group">
                         <fmt:message var="your_name" key="your.name" bundle="${application}"/>
-                        <input class="input-form" required="required" maxlength="30"
+                        <input class="input-form" pattern="[A-Za-zА-Яa-яЄєІіЇї']+" required="required" maxlength="30"
                             type="text" name="name" placeholder="${your_name} *" value=""/>
                     </div>
                     <div class="form-group">
                         <fmt:message var="your_surname" key="your.surname" bundle="${application}"/>
-                        <input class="input-form" required="required" maxlength="30"
-                            type="text" name="surname"  placeholder="${your_surname} *" value=""/>
+                        <input class="input-form" pattern="[A-Za-zА-Яa-яЄєІіЇї']+" required="required" maxlength="30"
+                            type="text" name="surname" placeholder="${your_surname} *" value=""/>
                     </div>
                     <div class="form-group">
                         <fmt:message var="new_password" key="new.password" bundle="${application}"/>

@@ -32,9 +32,9 @@ public class SpecialtyDaoImpl implements SpecialtyDao {
     }
 
     @Override
-    public List<String> findAllSpecialties() {
+    public List<String> findAllSpecialtiesNames() {
         try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("select.all.specialties"))) {
+             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("select.all.specialties.names"))) {
 
             ResultSet resultSet = statement.executeQuery();
             List<String> result = new ArrayList<>();
@@ -44,7 +44,7 @@ public class SpecialtyDaoImpl implements SpecialtyDao {
 
             return result;
         } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding all specialties operation exception!");
+            throw new DatabaseRuntimeException(e, "Finding all specialties names operation exception!");
         }
     }
 
@@ -55,10 +55,31 @@ public class SpecialtyDaoImpl implements SpecialtyDao {
 
             statement.setString(1, specialty);
             ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
 
-            return getMapper().map(resultSet);
+                return getMapper().map(resultSet);
+            }
+
+            return null;
         } catch (SQLException e) {
             throw new DatabaseRuntimeException(e, "Finding specialty operation exception!");
+        }
+    }
+
+    @Override
+    public List<Specialty> findAllSpecialties() {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("select.all.specialties"))) {
+
+            ResultSet resultSet = statement.executeQuery();
+            List<Specialty> result = new ArrayList<>();
+            while (resultSet.next()) {
+                result.add(getMapper().map(resultSet));
+            }
+
+            return result;
+        } catch (SQLException e) {
+            throw new DatabaseRuntimeException(e, "Finding all specialties operation exception!");
         }
     }
 

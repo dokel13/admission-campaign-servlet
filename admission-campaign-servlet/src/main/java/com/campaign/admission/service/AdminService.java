@@ -11,4 +11,10 @@ public interface AdminService {
     void setAdmission(Boolean open);
 
     List<Exam> findExamsPaginated(String subject, Integer page, Integer pageSize);
+
+    Integer countExamsBySubject(String subject);
+
+    void saveMarks(String[] emails, String[] marks);
+
+    Boolean checkAdmission();
 }

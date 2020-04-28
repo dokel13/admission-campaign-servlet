@@ -6,7 +6,10 @@ import com.campaign.admission.dao.mapper.Mapper;
 import com.campaign.admission.domain.Exam;
 import com.campaign.admission.exception.DatabaseRuntimeException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -115,6 +118,40 @@ public class ExamDaoImpl implements ExamDao {
             return result;
         } catch (SQLException e) {
             throw new DatabaseRuntimeException(e, "Finding exams paginated operation exception");
+        }
+    }
+
+    @Override
+    public Integer findExamsCountBySubject(String subject) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("select.exams.count.by.subject"))) {
+
+            statement.setString(1, subject);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+
+                return resultSet.getInt("count");
+            }
+
+            return 0;
+        } catch (SQLException e) {
+            throw new DatabaseRuntimeException(e, "Finding exams count by subject operation exception!");
+        }
+    }
+
+    @Override
+    public void setMarks(List<Exam> exams) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("update.exams.marks.by.email"))) {
+
+            for (Exam exam : exams) {
+                statement.setInt(1, exam.getMark());
+                statement.setString(2, exam.getUser().getEmail());
+                statement.addBatch();
+            }
+            statement.executeBatch();
+        } catch (SQLException e) {
+            throw new DatabaseRuntimeException(e, "Setting marks operation exception!");
         }
     }
 }

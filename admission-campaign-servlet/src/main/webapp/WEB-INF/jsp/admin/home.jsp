@@ -40,12 +40,12 @@
                         </table>
                     </div>
                     <fmt:message var="end_admission" key="end.admission" bundle="${application}"/>
-                    <a class="button" href="${pageContext.request.contextPath}/api/admin/setAdmission?open=false&locale=${sessionScope.locale}">
+                    <a class="button" href="${pageContext.request.contextPath}/api/admin/set_admission?open=false&locale=${sessionScope.locale}">
                         ${end_admission}</a>
                 </c:when>
                 <c:otherwise>
                     <fmt:message var="start_admission" key="start.admission" bundle="${application}"/>
-                    <a class="button" href="${pageContext.request.contextPath}/api/admin/setAdmission?open=true&locale=${sessionScope.locale}">
+                    <a class="button" href="${pageContext.request.contextPath}/api/admin/set_admission?open=true&locale=${sessionScope.locale}">
                         ${start_admission}</a>
                 </c:otherwise>
             </c:choose>

@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface SpecialtyDao {
 
-    List<String> findAllSpecialties();
+    List<String> findAllSpecialtiesNames();
 
     Specialty findSpecialty(String subject);
+
+    List<Specialty> findAllSpecialties();
 
     List<Boolean> findSpecialtiesOpens();
 

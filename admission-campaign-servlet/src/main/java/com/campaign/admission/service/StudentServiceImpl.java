@@ -65,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<String> findAllSpecialties() {
-        return specialtyDao.findAllSpecialties();
+        return specialtyDao.findAllSpecialtiesNames();
     }
 
     @Override
@@ -81,20 +81,21 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void specialtyApply(String email, String specialtyName) {
         Specialty specialty = specialtyDao.findSpecialty(specialtyName);
-        applicationValidator(email, specialty);
+        int markSum = applicationValidator(email, specialty);
         User user = builder()
                 .withEmail(email)
                 .build();
-        applicationDao.saveApplication(new Application(user, specialty));
+        applicationDao.saveApplication(new Application(user, specialty, markSum));
     }
 
-    private void applicationValidator(String email, Specialty specialty) {
+    private Integer applicationValidator(String email, Specialty specialty) {
         if (!specialty.getOpen()) {
             throw new ServiceRuntimeException("Admission is closed!");
         }
         applicationDao.findApplicationByEmail(email).ifPresent(id -> {
             throw new ServiceRuntimeException("User already has application!");
         });
-        validateMarks(examDao.findExamsByEmail(email), specialty.getRequirements());
+
+        return validateMarks(examDao.findExamsByEmail(email), specialty.getRequirements());
     }
 }

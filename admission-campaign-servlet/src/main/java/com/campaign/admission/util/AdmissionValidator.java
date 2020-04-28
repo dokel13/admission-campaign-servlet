@@ -8,7 +8,8 @@ import java.util.List;
 
 public class AdmissionValidator {
 
-    public static void validateMarks(List<Exam> exams, List<Requirement> requirements) {
+    public static Integer validateMarks(List<Exam> exams, List<Requirement> requirements) {
+        int result = 0;
         for (Requirement requirement : requirements) {
             Exam exam = null;
             for (Exam e : exams) {
@@ -19,8 +20,11 @@ public class AdmissionValidator {
             }
             if ((exam == null) || exam.getMark() < requirement.getMark()) {
                 throw new AdmissionValidatorRuntimeException("Insufficient marks for specialty admission!");
+            } else {
+                result += exam.getMark();
             }
         }
+        return result;
     }
 
     public static boolean validateAdmissionOpen(List<Boolean> opens) {

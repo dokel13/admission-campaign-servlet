@@ -11,6 +11,9 @@ import static java.util.Optional.ofNullable;
 
 public class SubjectCommand implements Command {
 
+    private static final Integer PAGE_SIZE = 3;
+    private static final String PAGE_STRING = "page=";
+
     private final AdminService adminService;
 
     public SubjectCommand(AdminService adminService) {
@@ -20,14 +23,26 @@ public class SubjectCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String subject = request.getQueryString().replaceAll("&.*", "");
-        int page = parseInt(ofNullable(request.getParameter("page")).orElse("1")) - 1;
-        if (page < 0) {
-            page = 0;
+        int page = parseInt(ofNullable(request.getParameter("page")).orElse("1"));
+        int examsCount = adminService.countExamsBySubject(subject);
+        int pagesCount;
+        if (examsCount >= 0 && examsCount <= PAGE_SIZE) {
+            pagesCount = 1;
+        } else {
+            pagesCount = examsCount / PAGE_SIZE;
+            if (examsCount > 2 && (examsCount % PAGE_SIZE) > 0) {
+                pagesCount += 1;
+            }
         }
-        List<Exam> exams = adminService.findExamsPaginated(subject, page, 3);
+        if (page > pagesCount) {
+
+            return "redirect:/admission/api/admin/subject?" + request.getQueryString()
+                    .replace(PAGE_STRING + page, PAGE_STRING + pagesCount);
+        }
+        List<Exam> exams = adminService.findExamsPaginated(subject, page - 1, PAGE_SIZE);
         request.setAttribute("subject", subject);
         request.setAttribute("exams", exams);
-        request.setAttribute("page", page + 1);
+        request.setAttribute("page", page);
 
         return "/WEB-INF/jsp/admin/subject.jsp";
     }

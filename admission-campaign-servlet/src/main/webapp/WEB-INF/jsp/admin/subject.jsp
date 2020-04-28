@@ -16,8 +16,8 @@
         <div class="right-corner">
             <div class="language">
                 <fmt:message var="choose_ukrainian" key="choose.ukrainian" bundle="${application}"/>
-                <a href="${pageContext.request.contextPath}/api/admin/subject?${subject}&page=${sessionScope.page}&locale=ua" title="${choose_ukrainian}">UA</a>/
-                <a href="${pageContext.request.contextPath}/api/admin/subject?${subject}&page=${sessionScope.page}&locale=en" title="choose English">EN</a>
+                <a href="${pageContext.request.contextPath}/api/admin/subject?${subject}&page=${page}&locale=ua" title="${choose_ukrainian}">UA</a>/
+                <a href="${pageContext.request.contextPath}/api/admin/subject?${subject}&page=${page}&locale=en" title="choose English">EN</a>
             </div>
             <%@include file="/WEB-INF/jsp/student/logout.jsp" %>
         </div>
@@ -27,26 +27,22 @@
                                             title="${back_message}"><span class="symbol">&#11013;</span>${back_button}</a>
         <h3 class="title"><fmt:message key="${subject}" bundle="${application}"/></h3>
         <div class="table-container">
-            <form class="checkbox-form" method="post" action="${pageContext.request.contextPath}/api/student/exams?locale=${sessionScope.locale}">
+            <form class="checkbox-form" method="post" action="${pageContext.request.contextPath}/api/admin/subject/save_marks?${subject}&page=${page}&locale=${sessionScope.locale}">
                 <div>
-                    <table class="subject-table-1">
+                    <table class="exam-table">
                         <thead>
                             <tr>
-                                <th><fmt:message key="subject" bundle="${application}"/></th>
-                                <th class="th-2"><fmt:message key="mark" bundle="${application}"/></th>
+                                <th><fmt:message key="student.name" bundle="${application}"/></th>
+                                <th><fmt:message key="email" bundle="${application}"/></th>
+                                <th><fmt:message key="mark" bundle="${application}"/></th>
                             </tr>
                         </thead>
-                    </table>
-                </div>
-                <div class="scroll-form">
-                    <table class="subject-table-2">
                         <tbody>
-                            <c:forEach items="${subjects}" var="subject">
+                            <c:forEach items="${exams}" var="exam">
                                 <tr>
-                                    <fmt:message var="subject_locale" key="${subject}" bundle="${application}"/>
-                                    <fmt:message var="subject_message" key="subject.message" bundle="${application}"/>
-                                    <td><label for="${subject}" title="${subject_message}">${subject_locale}</label></td>
-                                    <td><input type="checkbox" name="subjects" id="${subject}" value="${subject}" /></td>
+                                    <td>${exam.user.name} ${exam.user.surname}</td>
+                                    <td>${exam.user.email}<input type="hidden" name="email" value="${exam.user.email}"/></td>
+                                    <td><input type="number" name="mark" value="${exam.mark}" min="0" max="200"/></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -57,6 +53,12 @@
                     <input type="submit" class="btnSubmit" value="${save}" />
                 </div>
             </form>
+        </div>
+        <div class="button-container">
+            <a class="page-button" href="${pageContext.request.contextPath}/api/admin/subject?${subject}&page=${page - 1}&locale=${sessionScope.locale}">
+                <span class="symbol">←</span></a>
+            <a class="page-button" href="${pageContext.request.contextPath}/api/admin/subject?${subject}&page=${page + 1}&locale=${sessionScope.locale}">
+                <span class="symbol">→</span></a>
         </div>
     </body>
 </html>

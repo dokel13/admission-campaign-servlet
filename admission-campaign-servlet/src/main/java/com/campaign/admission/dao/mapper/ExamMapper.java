@@ -15,7 +15,7 @@ public class ExamMapper implements Mapper {
         User user = User.builder()
                 .withName(resultSet.getString("name"))
                 .withSurname(resultSet.getString("surname"))
-                .withEmail("email")
+                .withEmail(resultSet.getString("email"))
                 .build();
 
         return builder().withMark(resultSet.getInt("mark"))

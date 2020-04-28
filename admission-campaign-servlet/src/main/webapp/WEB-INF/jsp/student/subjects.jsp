@@ -47,7 +47,7 @@
                                     <fmt:message var="subject_locale" key="${subject}" bundle="${application}"/>
                                     <fmt:message var="subject_message" key="subject.message" bundle="${application}"/>
                                     <td><label for="${subject}" title="${subject_message}">${subject_locale}</label></td>
-                                    <td><input type="checkbox" name="subjects" id="${subject}" value="${subject}" /></td>
+                                    <td><input type="checkbox" name="subject" id="${subject}" value="${subject}" /></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

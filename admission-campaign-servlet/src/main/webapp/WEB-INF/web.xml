@@ -30,19 +30,19 @@
         <url-pattern>/api/*</url-pattern>
     </filter-mapping>
     <filter>
-        <filter-name>LocaleFilter</filter-name>
-        <filter-class>com.campaign.admission.controller.filter.LocaleFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>LocaleFilter</filter-name>
-        <url-pattern>/api/*</url-pattern>
-    </filter-mapping>
-    <filter>
         <filter-name>PaginationFilter</filter-name>
         <filter-class>com.campaign.admission.controller.filter.PaginationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>PaginationFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>LocaleFilter</filter-name>
+        <filter-class>com.campaign.admission.controller.filter.LocaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LocaleFilter</filter-name>
         <url-pattern>/api/*</url-pattern>
     </filter-mapping>
 
