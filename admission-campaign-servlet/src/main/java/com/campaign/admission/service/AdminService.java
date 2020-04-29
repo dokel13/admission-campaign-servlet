@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface AdminService {
 
-    List<String> findAllSubjects();
+    List<String> getAllSubjects();
 
     void setAdmission(Boolean open);
 
-    List<Exam> findExamsPaginated(String subject, Integer page, Integer pageSize);
+    List<Exam> getExamsPaginated(String subject, Integer page, Integer pageSize);
 
     Integer countExamsBySubject(String subject);
 

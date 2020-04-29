@@ -1,5 +1,6 @@
 package com.campaign.admission.service;
 
+import com.campaign.admission.domain.Application;
 import com.campaign.admission.domain.Exam;
 import com.campaign.admission.domain.Specialty;
 
@@ -7,17 +8,21 @@ import java.util.List;
 
 public interface StudentService {
 
-    List<String> findUserFreeSubjects(String email);
+    List<String> getUserFreeSubjects(String email);
 
     void saveExamSubjects(String[] subjects, String email);
 
-    Boolean checkUserEnrollment(String email);
+    List<String> getAllSpecialties();
 
-    List<String> findAllSpecialties();
+    Specialty getSpecialty(String specialty);
 
-    Specialty findSpecialty(String specialty);
+    List<Exam> getResults(String email);
 
-    List<Exam> findResults(String email);
+    Application getApplication(String email);
+
+    Integer countApplicationsBySpecialty(String specialty);
+
+    List<Application> getApplicationsPaginated(String specialty, Integer page, Integer pageSize);
 
     void specialtyApply(String email, String specialty);
 }

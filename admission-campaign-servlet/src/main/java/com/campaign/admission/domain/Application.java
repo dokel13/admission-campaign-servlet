@@ -10,22 +10,16 @@ public class Application {
     private Boolean enrollment;
     private Integer markSum;
 
-    public Application(Integer id, User user, Specialty specialty, Boolean enrollment, Integer markSum) {
-        this.id = id;
-        this.user = user.clone();
-        this.specialty = specialty.clone();
-        this.enrollment = enrollment;
-        this.markSum = markSum;
+    private Application(ApplicationBuilder applicationBuilder) {
+        id = applicationBuilder.id;
+        user = applicationBuilder.user;
+        specialty = applicationBuilder.specialty;
+        enrollment = applicationBuilder.enrollment;
+        markSum = applicationBuilder.markSum;
     }
 
-    public Application(User user, Specialty specialty, Integer markSum) {
-        this.user = user.clone();
-        this.specialty = specialty.clone();
-        this.markSum = markSum;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public static ApplicationBuilder builder() {
+        return new ApplicationBuilder();
     }
 
     public Integer getId() {
@@ -79,5 +73,46 @@ public class Application {
                 ", enrollment=" + enrollment +
                 ", markSum=" + markSum +
                 '}';
+    }
+
+    public static class ApplicationBuilder {
+
+        private Integer id;
+        private User user;
+        private Specialty specialty;
+        private Boolean enrollment;
+        private Integer markSum;
+
+        public ApplicationBuilder() {
+        }
+
+        public Application build() {
+            return new Application(this);
+        }
+
+        public ApplicationBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public ApplicationBuilder withUser(User user) {
+            this.user = user.clone();
+            return this;
+        }
+
+        public ApplicationBuilder withSpecialty(Specialty specialty) {
+            this.specialty = specialty;
+            return this;
+        }
+
+        public ApplicationBuilder withEnrollment(Boolean enrollment) {
+            this.enrollment = enrollment;
+            return this;
+        }
+
+        public ApplicationBuilder withMarkSum(Integer markSum) {
+            this.markSum = markSum;
+            return this;
+        }
     }
 }

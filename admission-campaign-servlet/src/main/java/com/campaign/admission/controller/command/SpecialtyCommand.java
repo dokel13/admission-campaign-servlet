@@ -16,7 +16,7 @@ public class SpecialtyCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String specialtyName = request.getQueryString().replaceAll("&.*", "");
-        Specialty specialty = studentService.findSpecialty(specialtyName);
+        Specialty specialty = studentService.getSpecialty(specialtyName);
         request.setAttribute("specialty", specialty);
 
         return "/WEB-INF/jsp/student/specialty.jsp";

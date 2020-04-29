@@ -10,11 +10,14 @@ import com.campaign.admission.domain.User;
 import com.campaign.admission.exception.ServiceRuntimeException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.campaign.admission.domain.User.builder;
 import static com.campaign.admission.util.AdmissionValidator.validateAdmissionOpen;
 import static com.campaign.admission.util.AdmissionValidator.validateMarks;
+import static com.campaign.admission.util.PaginationUtils.countPages;
 import static java.util.Arrays.stream;
+import static java.util.Optional.of;
 import static java.util.stream.Collectors.toList;
 
 public class StudentServiceImpl implements StudentService {
@@ -30,7 +33,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<String> findUserFreeSubjects(String email) {
+    public List<String> getUserFreeSubjects(String email) {
         if (validateAdmissionOpen(specialtyDao.findSpecialtiesOpens())) {
             List<String> subjects = examDao.findUserFreeSubjects(email);
             if (subjects.size() == 0) {
@@ -59,33 +62,52 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Boolean checkUserEnrollment(String email) {
-        return applicationDao.findEnrollmentByEmail(email).orElse(false);
-    }
-
-    @Override
-    public List<String> findAllSpecialties() {
+    public List<String> getAllSpecialties() {
         return specialtyDao.findAllSpecialtiesNames();
     }
 
     @Override
-    public Specialty findSpecialty(String specialty) {
-        return specialtyDao.findSpecialty(specialty);
+    public Specialty getSpecialty(String specialty) {
+        return specialtyDao.findSpecialty(specialty).orElseThrow(() ->
+                new ServiceRuntimeException("Finding specialty database exception!"));
     }
 
     @Override
-    public List<Exam> findResults(String email) {
+    public List<Exam> getResults(String email) {
         return examDao.findExamsByEmail(email);
     }
 
     @Override
+    public Application getApplication(String email) {
+        if (validateAdmissionOpen(specialtyDao.findSpecialtiesOpens())) {
+            return null;
+        }
+        return applicationDao.findApplicationByEmail(email).orElse(null);
+    }
+
+    @Override
+    public Integer countApplicationsBySpecialty(String specialty) {
+        return applicationDao.findApplicationsCountBySpecialty(specialty);
+    }
+
+    @Override
+    public List<Application> getApplicationsPaginated(String specialty, Integer page, Integer pageSize) {
+        return applicationDao.findApplicationsPaginatedBySpecialty(specialty, page, pageSize);
+    }
+
+    @Override
     public void specialtyApply(String email, String specialtyName) {
-        Specialty specialty = specialtyDao.findSpecialty(specialtyName);
+        Specialty specialty = specialtyDao.findSpecialty(specialtyName).orElseThrow(() ->
+                new ServiceRuntimeException("Finding specialty database exception!"));
         int markSum = applicationValidator(email, specialty);
         User user = builder()
                 .withEmail(email)
                 .build();
-        applicationDao.saveApplication(new Application(user, specialty, markSum));
+        applicationDao.saveApplication(Application.builder()
+                .withUser(user)
+                .withSpecialty(specialty)
+                .withMarkSum(markSum)
+                .build());
     }
 
     private Integer applicationValidator(String email, Specialty specialty) {

@@ -18,7 +18,7 @@
                 <a href="${pageContext.request.contextPath}/api/student?locale=ua" title="${choose_ukrainian}">UA</a>/
                 <a href="${pageContext.request.contextPath}/api/student?locale=en" title="choose English">EN</a>
             </div>
-            <%@include file="/WEB-INF/jsp/student/logout.jsp" %>
+            <%@include file="/WEB-INF/jsp/logout.jsp" %>
         </div>
         <h3 class="title"><fmt:message key="your.profile" bundle="${application}"/></h3>
         <div class="buttons-container">
@@ -49,7 +49,7 @@
                 <tr>
                     <fmt:message var="rating" key="rating" bundle="${application}"/>
                     <fmt:message var="rating_message" key="rating.message" bundle="${application}"/>
-                    <td colspan = "2"><a class="button-2" href="${pageContext.request.contextPath}/api/student/rating?locale=${sessionScope.locale}"
+                    <td colspan = "2"><a class="button-2" href="${pageContext.request.contextPath}/api/student/rating?page=1&locale=${sessionScope.locale}"
                         title="${rating_message}">${rating}<br><span class="symbol">&#10532;</span></a></td>
                 </tr>
             <table>

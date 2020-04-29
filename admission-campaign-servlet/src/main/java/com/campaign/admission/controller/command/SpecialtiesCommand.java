@@ -15,7 +15,7 @@ public class SpecialtiesCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        List<String> specialties = studentService.findAllSpecialties();
+        List<String> specialties = studentService.getAllSpecialties();
         request.setAttribute("specialties", specialties);
 
         return "/WEB-INF/jsp/student/specialties.jsp";

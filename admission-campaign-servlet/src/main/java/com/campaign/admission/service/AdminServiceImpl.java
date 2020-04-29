@@ -28,7 +28,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<String> findAllSubjects() {
+    public List<String> getAllSubjects() {
         if (validateAdmissionOpen(specialtyDao.findSpecialtiesOpens())) {
             return examDao.findAllSubjects();
         }
@@ -47,7 +47,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Exam> findExamsPaginated(String subject, Integer page, Integer pageSize) {
+    public List<Exam> getExamsPaginated(String subject, Integer page, Integer pageSize) {
         if (validateAdmissionOpen(specialtyDao.findSpecialtiesOpens())) {
             return examDao.findExamsPaginated(subject, page, pageSize);
         }

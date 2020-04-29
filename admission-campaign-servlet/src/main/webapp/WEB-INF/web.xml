@@ -9,11 +9,11 @@
     </jsp-config>
 
     <servlet>
-        <servlet-name>GlobalServlet</servlet-name>
-        <servlet-class>com.campaign.admission.controller.GlobalServlet</servlet-class>
+        <servlet-name>ControllerServlet</servlet-name>
+        <servlet-class>com.campaign.admission.controller.ControllerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>GlobalServlet</servlet-name>
+        <servlet-name>ControllerServlet</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
@@ -45,10 +45,17 @@
         <filter-name>LocaleFilter</filter-name>
         <url-pattern>/api/*</url-pattern>
     </filter-mapping>
-
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.campaign.admission.controller.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
 
     <error-page>
-        <error-code>404</error-code>
+        <exception-type>java.lang.Throwable</exception-type>
         <location>/api/error</location>
     </error-page>
 

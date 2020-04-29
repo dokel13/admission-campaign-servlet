@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GlobalServlet extends HttpServlet {
+public class ControllerServlet extends HttpServlet {
 
     private static final Map<String, Command> COMMANDS = new HashMap<>();
 
@@ -30,13 +30,14 @@ public class GlobalServlet extends HttpServlet {
         COMMANDS.put("register", new RegistrationCommand(userService));
         COMMANDS.put("login", new LoginCommand(userService));
         COMMANDS.put("logout", new LogoutCommand());
+        COMMANDS.put("error", new ErrorCommand());
         COMMANDS.put("student", new StudentHomeCommand(studentService));
         COMMANDS.put("student/subjects", new SubjectsCommand(studentService));
         COMMANDS.put("student/exams", new ExamRegistrationCommand(studentService));
         COMMANDS.put("student/specialties", new SpecialtiesCommand(studentService));
         COMMANDS.put("student/specialty", new SpecialtyCommand(studentService));
         COMMANDS.put("student/specialty/apply", new SpecialtyApplyCommand(studentService));
-        COMMANDS.put("student/rating", new RatingCommand());
+        COMMANDS.put("student/rating", new RatingCommand(studentService));
         COMMANDS.put("student/results", new ResultCommand(studentService));
         COMMANDS.put("admin", new AdminHomeCommand(adminService));
         COMMANDS.put("admin/set_admission", new AdmissionCommand(adminService));

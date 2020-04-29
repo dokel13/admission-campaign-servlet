@@ -15,7 +15,7 @@ public class AdminHomeCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        List<String> subjects = adminService.findAllSubjects();
+        List<String> subjects = adminService.getAllSubjects();
         if (subjects != null) {
             request.setAttribute("subjects", subjects);
         }

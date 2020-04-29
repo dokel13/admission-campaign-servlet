@@ -1,6 +1,5 @@
 package com.campaign.admission.dao;
 
-import com.campaign.admission.dao.datasource.ConnectionPool;
 import com.campaign.admission.dao.mapper.ApplicationMapper;
 import com.campaign.admission.dao.mapper.Mapper;
 import com.campaign.admission.domain.Application;
@@ -9,35 +8,21 @@ import com.campaign.admission.exception.DatabaseRuntimeException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
-import static java.util.ResourceBundle.getBundle;
+public class ApplicationDaoImpl extends AbstractDao<Application> implements ApplicationDao {
 
-public class ApplicationDaoImpl implements ApplicationDao {
-
-    private final ConnectionPool connectionPool;
-
-    private final ResourceBundle resourceBundle;
-
-    public ApplicationDaoImpl() {
-        connectionPool = new ConnectionPool("database");
-        resourceBundle = getBundle("queries");
-    }
-
-    private Mapper<Application> getMapper() {
+    @Override
+    protected Mapper<Application> getMapper() {
         return new ApplicationMapper();
     }
 
     @Override
     public void saveApplication(Application application) {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("insert.application"))) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(getSql("insert.application"))) {
 
             statement.setString(1, application.getUser().getEmail());
             statement.setString(2, application.getSpecialty().getName());
@@ -50,43 +35,50 @@ public class ApplicationDaoImpl implements ApplicationDao {
     }
 
     @Override
-    public Optional<Boolean> findEnrollmentByEmail(String email) {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("select.enrollment.by.email"))) {
+    public Optional<Application> findApplicationByEmail(String email) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(getSql("select.application.by.email"))) {
 
             statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return of(resultSet.getBoolean("enrollment"));
-            }
 
-            return empty();
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding enrollment by email operation exception!");
-        }
-    }
-
-    @Override
-    public Optional<Integer> findApplicationByEmail(String email) {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("select.application.by.email"))) {
-
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return of(resultSet.getInt("application_id"));
-            }
-
-            return empty();
+            return constructResult(statement.executeQuery());
         } catch (SQLException e) {
             throw new DatabaseRuntimeException(e, "Finding application by email operation exception!");
         }
     }
 
     @Override
+    public List<Application> findApplicationsPaginatedBySpecialty(String specialty, Integer page, Integer pageSize) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(getSql("select.applications.paginated.by.specialty"))) {
+
+            statement.setString(1, specialty);
+            statement.setInt(2, (page * pageSize));
+            statement.setInt(3, pageSize);
+
+            return constructMultivaluedResult(statement.executeQuery());
+        } catch (SQLException e) {
+            throw new DatabaseRuntimeException(e, "Finding applications paginated by specialty operation exception!");
+        }
+    }
+
+    @Override
+    public Integer findApplicationsCountBySpecialty(String specialty) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(getSql("select.applications.count.by.specialty"))) {
+
+            statement.setString(1, specialty);
+
+            return getIntResult(statement.executeQuery(), "count");
+        } catch (SQLException e) {
+            throw new DatabaseRuntimeException(e, "Finding applications count by specialty operation exception!");
+        }
+    }
+
+    @Override
     public void setAllEnrollments(Boolean enrollment) {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("update.all.enrollments"))) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(getSql("update.all.enrollments"))) {
 
             statement.setBoolean(1, enrollment);
             statement.execute();
@@ -97,8 +89,8 @@ public class ApplicationDaoImpl implements ApplicationDao {
 
     @Override
     public void setEnrollmentsBySpecialties(Boolean enrollment, List<Specialty> specialties) {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("update.sorted.enrollments.by.specialties"))) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(getSql("update.sorted.enrollments.by.specialties"))) {
 
             for (Specialty specialty : specialties) {
                 statement.setBoolean(1, enrollment);

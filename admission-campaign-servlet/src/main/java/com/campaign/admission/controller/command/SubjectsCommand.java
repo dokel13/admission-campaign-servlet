@@ -18,7 +18,7 @@ public class SubjectsCommand implements Command {
     public String execute(HttpServletRequest request) {
         String email = (String) request.getSession().getAttribute("email");
         try {
-            List<String> subjects = studentService.findUserFreeSubjects(email);
+            List<String> subjects = studentService.getUserFreeSubjects(email);
             request.setAttribute("subjects", subjects);
         } catch (ServiceRuntimeException e) {
             request.setAttribute("exception", e);

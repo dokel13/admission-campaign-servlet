@@ -9,7 +9,7 @@ public class Exam {
     private String subject;
     private Integer mark;
 
-    public Exam(ExamBuilder examBuilder) {
+    private Exam(ExamBuilder examBuilder) {
         id = examBuilder.id;
         user = examBuilder.user;
         subject = examBuilder.subject;

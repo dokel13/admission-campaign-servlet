@@ -10,24 +10,49 @@
         <style><%@include file="/WEB-INF/css/student/rating.css" %></style>
         <style><%@include file="/WEB-INF/css/right_corner.css" %></style>
         <style><%@include file="/WEB-INF/css/title.css" %></style>
+        <style><%@include file="/WEB-INF/css/back_button.css" %></style>
     </head>
     <body>
         <div class="right-corner">
             <div class="language">
                 <fmt:message var="choose_ukrainian" key="choose.ukrainian" bundle="${application}"/>
-                <a href="${pageContext.request.contextPath}/api/student/rating?locale=ua" title="${choose_ukrainian}">UA</a>/
-                <a href="${pageContext.request.contextPath}/api/student/rating?locale=en" title="choose English">EN</a>
+                <a href="${pageContext.request.contextPath}/api/student/rating?page=${page}&locale=ua" title="${choose_ukrainian}">UA</a>/
+                <a href="${pageContext.request.contextPath}/api/student/rating?page=${page}&locale=en" title="choose English">EN</a>
             </div>
-            <%@include file="/WEB-INF/jsp/student/logout.jsp" %>
+            <%@include file="/WEB-INF/jsp/logout.jsp" %>
         </div>
-        <h3 class="title"><fmt:message key="your.rating" bundle="${application}"/></h3>
-        <c:choose>
-            <c:when test="${sessionScope.exception.message == 'Login exception! User doesn`t exist!'}">
-
-            </c:when>
-            <c:otherwise>
-
-            </c:otherwise>
-        </c:choose>
+        <fmt:message var="back_button" key="back" bundle="${application}"/>
+        <fmt:message var="back_message" key="back.message" bundle="${application}"/>
+        <a class="back-button" href="${pageContext.request.contextPath}/api/home?locale=${sessionScope.locale}"
+                                            title="${back_message}"><span class="symbol">&#11013;</span>${back_button}</a>
+        <h3 class="title"><fmt:message key="${specialty}" bundle="${application}"/></h3>
+        <div class="table-container">
+            <table class="specialty-table">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="student.name" bundle="${application}"/></th>
+                        <th><fmt:message key="email" bundle="${application}"/></th>
+                        <th><fmt:message key="mark.sum" bundle="${application}"/></th>
+                        <th><fmt:message key="enrollment" bundle="${application}"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${apps}" var="app">
+                        <tr>
+                            <td>${app.user.name} ${app.user.surname}</td>
+                            <td>${app.user.email}</td>
+                            <td>${app.markSum}</td>
+                            <td><fmt:message key="${app.enrollment}" bundle="${application}"/></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <div class="button-container">
+            <a class="page-button" href="${pageContext.request.contextPath}/api/student/rating?page=${page - 1}&locale=${sessionScope.locale}">
+                <span class="symbol">←</span></a>
+            <a class="page-button" href="${pageContext.request.contextPath}/api/student/rating?page=${page + 1}&locale=${sessionScope.locale}">
+                <span class="symbol">→</span></a>
+        </div>
     </body>
 </html>

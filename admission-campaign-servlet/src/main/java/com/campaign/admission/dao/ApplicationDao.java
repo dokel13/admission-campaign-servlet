@@ -10,9 +10,11 @@ public interface ApplicationDao {
 
     void saveApplication(Application application);
 
-    Optional<Boolean> findEnrollmentByEmail(String email);
+    Optional<Application> findApplicationByEmail(String email);
 
-    Optional<Integer> findApplicationByEmail(String email);
+    List<Application> findApplicationsPaginatedBySpecialty(String specialty, Integer page, Integer pageSize);
+
+    Integer findApplicationsCountBySpecialty(String specialty);
 
     void setAllEnrollments(Boolean enrollment);
 

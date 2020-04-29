@@ -1,6 +1,5 @@
 package com.campaign.admission.dao;
 
-import com.campaign.admission.dao.datasource.ConnectionPool;
 import com.campaign.admission.dao.mapper.Mapper;
 import com.campaign.admission.dao.mapper.UserMapper;
 import com.campaign.admission.domain.User;
@@ -8,32 +7,18 @@ import com.campaign.admission.exception.DatabaseRuntimeException;
 
 import java.sql.*;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
-import static java.util.ResourceBundle.getBundle;
+public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
-public class UserDaoImpl implements UserDao {
-
-    private final ConnectionPool connectionPool;
-
-    private final ResourceBundle resourceBundle;
-
-    public UserDaoImpl() {
-        connectionPool = new ConnectionPool("database");
-        resourceBundle = getBundle("queries");
-    }
-
-    //    TODO abstract DAO or delete getMapper method
-    private Mapper<User> getMapper() {
+    @Override
+    protected Mapper<User> getMapper() {
         return new UserMapper();
     }
 
     @Override
     public User save(User user) {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("insert.user"),
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(getSql("insert.user"),
                      Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, user.getRole().name());
@@ -56,16 +41,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(resourceBundle.getString("select.user.by.email"))) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(getSql("select.user.by.email"))) {
 
             statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return of(getMapper().map(resultSet));
-            }
 
-            return empty();
+            return constructResult(statement.executeQuery());
         } catch (SQLException e) {
             throw new DatabaseRuntimeException(e, "Finding user by email operation exception!");
         }

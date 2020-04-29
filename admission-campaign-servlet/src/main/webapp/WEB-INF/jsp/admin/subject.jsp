@@ -19,7 +19,7 @@
                 <a href="${pageContext.request.contextPath}/api/admin/subject?${subject}&page=${page}&locale=ua" title="${choose_ukrainian}">UA</a>/
                 <a href="${pageContext.request.contextPath}/api/admin/subject?${subject}&page=${page}&locale=en" title="choose English">EN</a>
             </div>
-            <%@include file="/WEB-INF/jsp/student/logout.jsp" %>
+            <%@include file="/WEB-INF/jsp/logout.jsp" %>
         </div>
         <fmt:message var="back_button" key="back" bundle="${application}"/>
         <fmt:message var="back_message" key="back.message" bundle="${application}"/>
@@ -28,26 +28,24 @@
         <h3 class="title"><fmt:message key="${subject}" bundle="${application}"/></h3>
         <div class="table-container">
             <form class="checkbox-form" method="post" action="${pageContext.request.contextPath}/api/admin/subject/save_marks?${subject}&page=${page}&locale=${sessionScope.locale}">
-                <div>
-                    <table class="exam-table">
-                        <thead>
+                <table class="exam-table">
+                    <thead>
+                        <tr>
+                            <th><fmt:message key="student.name" bundle="${application}"/></th>
+                            <th><fmt:message key="email" bundle="${application}"/></th>
+                            <th><fmt:message key="mark" bundle="${application}"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${exams}" var="exam">
                             <tr>
-                                <th><fmt:message key="student.name" bundle="${application}"/></th>
-                                <th><fmt:message key="email" bundle="${application}"/></th>
-                                <th><fmt:message key="mark" bundle="${application}"/></th>
+                                <td>${exam.user.name} ${exam.user.surname}</td>
+                                <td>${exam.user.email}<input type="hidden" name="email" value="${exam.user.email}"/></td>
+                                <td><input type="number" name="mark" value="${exam.mark}" min="0" max="200"/></td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${exams}" var="exam">
-                                <tr>
-                                    <td>${exam.user.name} ${exam.user.surname}</td>
-                                    <td>${exam.user.email}<input type="hidden" name="email" value="${exam.user.email}"/></td>
-                                    <td><input type="number" name="mark" value="${exam.mark}" min="0" max="200"/></td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
+                        </c:forEach>
+                    </tbody>
+                </table>
                 <div class="form-button">
                     <fmt:message var="save" key="save" bundle="${application}"/>
                     <input type="submit" class="btnSubmit" value="${save}" />

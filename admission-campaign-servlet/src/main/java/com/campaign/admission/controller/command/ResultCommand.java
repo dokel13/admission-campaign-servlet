@@ -17,7 +17,7 @@ public class ResultCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String email = (String)request.getSession().getAttribute("email");
-        List<Exam> exams = studentService.findResults(email);
+        List<Exam> exams = studentService.getResults(email);
         request.setAttribute("exams", exams);
 
         return "/WEB-INF/jsp/student/results.jsp";

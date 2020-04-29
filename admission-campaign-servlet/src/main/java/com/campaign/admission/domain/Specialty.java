@@ -13,7 +13,7 @@ public class Specialty implements Cloneable {
     private Boolean open;
     private List<Requirement> requirements;
 
-    public Specialty(SpecialtyBuilder specialtyBuilder) {
+    private Specialty(SpecialtyBuilder specialtyBuilder) {
         id = specialtyBuilder.id;
         name = specialtyBuilder.name;
         maxStudentAmount = specialtyBuilder.maxStudentAmount;

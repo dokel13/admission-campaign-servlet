@@ -19,7 +19,7 @@
                 <a href="${pageContext.request.contextPath}/api/student/specialties?locale=ua" title="${choose_ukrainian}">UA</a>/
                 <a href="${pageContext.request.contextPath}/api/student/specialties?locale=en" title="choose English">EN</a>
             </div>
-            <%@include file="/WEB-INF/jsp/student/logout.jsp" %>
+            <%@include file="/WEB-INF/jsp/logout.jsp" %>
         </div>
         <fmt:message var="back_button" key="back" bundle="${application}"/>
         <fmt:message var="back_message" key="back.message" bundle="${application}"/>

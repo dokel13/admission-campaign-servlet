@@ -17,7 +17,7 @@
                 <a href="${pageContext.request.contextPath}/api/admin?locale=ua" title="${choose_ukrainian}">UA</a>/
                 <a href="${pageContext.request.contextPath}/api/admin?locale=en" title="choose English">EN</a>
             </div>
-            <%@include file="/WEB-INF/jsp/student/logout.jsp" %>
+            <%@include file="/WEB-INF/jsp/logout.jsp" %>
         </div>
         <div class="left-corner">
             <fmt:message key="admin" bundle="${application}"/>: ${name} ${surname}
