@@ -14,7 +14,7 @@ public interface AdminService {
 
     Integer countExamsBySubject(String subject);
 
-    void saveMarks(String[] emails, String[] marks);
+    void saveMarks(String subject, String[] emails, String[] marks);
 
     Boolean checkAdmission();
 }

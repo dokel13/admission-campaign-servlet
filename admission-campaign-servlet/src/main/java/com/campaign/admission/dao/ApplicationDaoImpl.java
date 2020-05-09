@@ -29,8 +29,10 @@ public class ApplicationDaoImpl extends AbstractDao<Application> implements Appl
             statement.setBoolean(3, false);
             statement.setInt(4, application.getMarkSum());
             statement.execute();
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Saving application operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Saving application operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -42,8 +44,10 @@ public class ApplicationDaoImpl extends AbstractDao<Application> implements Appl
             statement.setString(1, email);
 
             return constructResult(statement.executeQuery());
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding application by email operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding application by email operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -57,8 +61,10 @@ public class ApplicationDaoImpl extends AbstractDao<Application> implements Appl
             statement.setInt(3, pageSize);
 
             return constructMultivaluedResult(statement.executeQuery());
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding applications paginated by specialty operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding applications paginated by specialty operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -70,8 +76,10 @@ public class ApplicationDaoImpl extends AbstractDao<Application> implements Appl
             statement.setString(1, specialty);
 
             return getIntResult(statement.executeQuery(), "count");
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding applications count by specialty operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding applications count by specialty operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -82,8 +90,10 @@ public class ApplicationDaoImpl extends AbstractDao<Application> implements Appl
 
             statement.setBoolean(1, enrollment);
             statement.execute();
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Setting all enrollments operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Setting all enrollments operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -99,8 +109,10 @@ public class ApplicationDaoImpl extends AbstractDao<Application> implements Appl
                 statement.addBatch();
             }
             statement.executeBatch();
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Setting enrollments by specialties operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Setting enrollments by specialties operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 }

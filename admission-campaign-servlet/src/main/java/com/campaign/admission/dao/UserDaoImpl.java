@@ -34,8 +34,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             }
 
             return user;
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Saving user operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Saving user operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -47,8 +49,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             statement.setString(1, email);
 
             return constructResult(statement.executeQuery());
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding user by email operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding user by email operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 }

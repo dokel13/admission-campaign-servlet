@@ -18,5 +18,5 @@ public interface ExamDao {
 
     Integer findExamsCountBySubject(String subject);
 
-    void setMarks(List<Exam> exams);
+    void setMarks(String subject, List<Exam> exams);
 }

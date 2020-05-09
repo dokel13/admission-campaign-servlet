@@ -2,6 +2,7 @@ package com.campaign.admission.dao;
 
 import com.campaign.admission.dao.datasource.ConnectionPool;
 import com.campaign.admission.dao.mapper.Mapper;
+import org.slf4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,8 +15,11 @@ import java.util.ResourceBundle;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static java.util.ResourceBundle.getBundle;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public abstract class AbstractDao<T> {
+
+    protected static final Logger LOGGER = getLogger(ConnectionPool.class);
 
     private final ConnectionPool connectionPool;
 

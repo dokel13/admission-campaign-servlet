@@ -26,8 +26,10 @@ public class SpecialtyDaoImpl extends AbstractDao<Specialty> implements Specialt
              PreparedStatement statement = connection.prepareStatement(getSql("select.all.specialties.names"))) {
 
             return constructMultivaluedStrResult(statement.executeQuery(), "specialty");
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding all specialties names operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding all specialties names operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -39,8 +41,10 @@ public class SpecialtyDaoImpl extends AbstractDao<Specialty> implements Specialt
             statement.setString(1, specialty);
 
             return constructResult(statement.executeQuery());
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding specialty operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding specialty operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -50,8 +54,10 @@ public class SpecialtyDaoImpl extends AbstractDao<Specialty> implements Specialt
              PreparedStatement statement = connection.prepareStatement(getSql("select.all.specialties"))) {
 
             return constructMultivaluedResult(statement.executeQuery());
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding all specialties operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding all specialties operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -67,8 +73,10 @@ public class SpecialtyDaoImpl extends AbstractDao<Specialty> implements Specialt
             }
 
             return result;
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding specialties' opens operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding specialties' opens operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -79,8 +87,10 @@ public class SpecialtyDaoImpl extends AbstractDao<Specialty> implements Specialt
 
             statement.setBoolean(1, open);
             statement.execute();
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Setting admission operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Setting admission operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 }

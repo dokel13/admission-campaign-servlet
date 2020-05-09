@@ -25,8 +25,10 @@ public class ExamDaoImpl extends AbstractDao<Exam> implements ExamDao {
             statement.setString(1, email);
 
             return constructMultivaluedStrResult(statement.executeQuery(), "subject");
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding user free subjects operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding user free subjects operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -36,8 +38,10 @@ public class ExamDaoImpl extends AbstractDao<Exam> implements ExamDao {
              PreparedStatement statement = connection.prepareStatement(getSql("select.all.subjects"))) {
 
             return constructMultivaluedStrResult(statement.executeQuery(), "subject");
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding all subjects operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding all subjects operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -52,8 +56,10 @@ public class ExamDaoImpl extends AbstractDao<Exam> implements ExamDao {
                 statement.addBatch();
             }
             statement.executeBatch();
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Saving exams operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Saving exams operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -65,8 +71,10 @@ public class ExamDaoImpl extends AbstractDao<Exam> implements ExamDao {
             statement.setString(1, email);
 
             return constructMultivaluedResult(statement.executeQuery());
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding exams by email operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding exams by email operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -81,8 +89,10 @@ public class ExamDaoImpl extends AbstractDao<Exam> implements ExamDao {
             statement.setInt(3, pageSize);
 
             return constructMultivaluedResult(statement.executeQuery());
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding exams paginated operation exception");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding exams paginated operation exception";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
@@ -94,24 +104,29 @@ public class ExamDaoImpl extends AbstractDao<Exam> implements ExamDao {
             statement.setString(1, subject);
 
             return getIntResult(statement.executeQuery(), "count");
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Finding exams count by subject operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Finding exams count by subject operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 
     @Override
-    public void setMarks(List<Exam> exams) {
+    public void setMarks(String subject, List<Exam> exams) {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(getSql("update.exams.marks.by.email"))) {
 
             for (Exam exam : exams) {
                 statement.setInt(1, exam.getMark());
                 statement.setString(2, exam.getUser().getEmail());
+                statement.setString(3, subject);
                 statement.addBatch();
             }
             statement.executeBatch();
-        } catch (SQLException e) {
-            throw new DatabaseRuntimeException(e, "Setting marks operation exception!");
+        } catch (SQLException exception) {
+            String exceptionMessage = "Setting marks operation exception!";
+            LOGGER.error(exceptionMessage);
+            throw new DatabaseRuntimeException(exception, exceptionMessage);
         }
     }
 }

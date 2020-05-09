@@ -24,5 +24,5 @@ public interface StudentService {
 
     List<Application> getApplicationsPaginated(String specialty, Integer page, Integer pageSize);
 
-    void specialtyApply(String email, String specialty);
+    String specialtyApply(String email, String specialty);
 }

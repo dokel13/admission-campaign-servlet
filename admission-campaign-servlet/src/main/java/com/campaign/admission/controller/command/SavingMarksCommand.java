@@ -14,7 +14,8 @@ public class SavingMarksCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        adminService.saveMarks(request.getParameterValues("email"), request.getParameterValues("mark"));
+        String subject = request.getQueryString().replaceAll("&.*", "");
+        adminService.saveMarks(subject, request.getParameterValues("email"), request.getParameterValues("mark"));
 
         return "redirect:/admission/api/admin/subject?" + request.getQueryString();
     }

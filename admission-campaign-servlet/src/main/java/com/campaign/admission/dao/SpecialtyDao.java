@@ -9,7 +9,7 @@ public interface SpecialtyDao {
 
     List<String> findAllSpecialtiesNames();
 
-    Optional<Specialty> findSpecialty(String subject);
+    Optional<Specialty> findSpecialty(String specialty);
 
     List<Specialty> findAllSpecialties();
 

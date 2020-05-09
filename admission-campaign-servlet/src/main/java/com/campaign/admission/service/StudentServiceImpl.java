@@ -3,24 +3,26 @@ package com.campaign.admission.service;
 import com.campaign.admission.dao.ApplicationDao;
 import com.campaign.admission.dao.ExamDao;
 import com.campaign.admission.dao.SpecialtyDao;
+import com.campaign.admission.dao.datasource.ConnectionPool;
 import com.campaign.admission.domain.Application;
 import com.campaign.admission.domain.Exam;
 import com.campaign.admission.domain.Specialty;
 import com.campaign.admission.domain.User;
 import com.campaign.admission.exception.ServiceRuntimeException;
+import org.slf4j.Logger;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.campaign.admission.domain.User.builder;
 import static com.campaign.admission.util.AdmissionValidator.validateAdmissionOpen;
 import static com.campaign.admission.util.AdmissionValidator.validateMarks;
-import static com.campaign.admission.util.PaginationUtils.countPages;
 import static java.util.Arrays.stream;
-import static java.util.Optional.of;
 import static java.util.stream.Collectors.toList;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class StudentServiceImpl implements StudentService {
+
+    private static final Logger LOGGER = getLogger(ConnectionPool.class);
 
     private final ExamDao examDao;
     private final SpecialtyDao specialtyDao;
@@ -39,6 +41,7 @@ public class StudentServiceImpl implements StudentService {
             if (subjects.size() == 0) {
                 throw new ServiceRuntimeException("Finding subjects exception! No user free subjects are found!");
             } else {
+
                 return subjects;
             }
         } else {
@@ -68,8 +71,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Specialty getSpecialty(String specialty) {
-        return specialtyDao.findSpecialty(specialty).orElseThrow(() ->
-                new ServiceRuntimeException("Finding specialty database exception!"));
+        return specialtyDao.findSpecialty(specialty).orElseGet(() -> {
+            LOGGER.error("Finding specialty database exception!");
+            throw new ServiceRuntimeException("Finding specialty database exception!");
+        });
     }
 
     @Override
@@ -82,6 +87,7 @@ public class StudentServiceImpl implements StudentService {
         if (validateAdmissionOpen(specialtyDao.findSpecialtiesOpens())) {
             return null;
         }
+
         return applicationDao.findApplicationByEmail(email).orElse(null);
     }
 
@@ -96,7 +102,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void specialtyApply(String email, String specialtyName) {
+    public String specialtyApply(String email, String specialtyName) {
         Specialty specialty = specialtyDao.findSpecialty(specialtyName).orElseThrow(() ->
                 new ServiceRuntimeException("Finding specialty database exception!"));
         int markSum = applicationValidator(email, specialty);
@@ -108,13 +114,15 @@ public class StudentServiceImpl implements StudentService {
                 .withSpecialty(specialty)
                 .withMarkSum(markSum)
                 .build());
+
+        return specialtyName;
     }
 
     private Integer applicationValidator(String email, Specialty specialty) {
         if (!specialty.getOpen()) {
             throw new ServiceRuntimeException("Admission is closed!");
         }
-        applicationDao.findApplicationByEmail(email).ifPresent(id -> {
+        applicationDao.findApplicationByEmail(email).ifPresent(app -> {
             throw new ServiceRuntimeException("User already has application!");
         });
 

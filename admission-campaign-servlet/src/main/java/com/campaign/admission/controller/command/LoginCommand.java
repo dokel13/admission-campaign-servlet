@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class LoginCommand implements Command {
 
-    public UserService userService;
+    private final UserService userService;
 
     public LoginCommand(UserService userService) {
         this.userService = userService;

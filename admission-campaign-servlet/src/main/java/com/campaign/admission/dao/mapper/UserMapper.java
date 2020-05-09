@@ -14,7 +14,6 @@ public class UserMapper implements Mapper {
     public User map(ResultSet resultSet) throws SQLException {
 
         return builder()
-                .withId(resultSet.getInt("user_id"))
                 .withRole(Role.valueOf(resultSet.getString("role")))
                 .withEmail(resultSet.getString("email"))
                 .withPassword(resultSet.getString("password"))

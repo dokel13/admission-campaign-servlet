@@ -7,13 +7,13 @@ import com.campaign.admission.domain.Exam;
 import com.campaign.admission.domain.User;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static com.campaign.admission.util.AdmissionValidator.validateAdmissionOpen;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.min;
 import static java.util.Optional.of;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.range;
 
 public class AdminServiceImpl implements AdminService {
 
@@ -38,9 +38,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void setAdmission(Boolean open) {
-        if (open == true) {
+        if (open) {
             applicationDao.setAllEnrollments(false);
-        } else if (open == false) {
+        } else {
             applicationDao.setEnrollmentsBySpecialties(true, specialtyDao.findAllSpecialties());
         }
         specialtyDao.setAdmission(open);
@@ -61,8 +61,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void saveMarks(String[] emails, String[] marks) {
-        examDao.setMarks(IntStream.range(0, min(emails.length, marks.length))
+    public void saveMarks(String subject, String[] emails, String[] marks) {
+        examDao.setMarks(subject, range(0, min(emails.length, marks.length))
                 .mapToObj(i -> Exam.builder()
                         .withUser(User.builder().withEmail(emails[i]).build())
                         .withMark(parseInt(of((marks[i])).filter(j -> !j.equals("")).orElse("0")))
