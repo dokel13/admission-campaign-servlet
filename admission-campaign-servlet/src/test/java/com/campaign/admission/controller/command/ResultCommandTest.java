@@ -26,7 +26,7 @@ public class ResultCommandTest {
     private HttpSession session;
 
     @InjectMocks
-    private ResultCommand resultCommand;
+    private ResultsCommand resultCommand;
 
     private final TestHttpServletRequest request = new TestHttpServletRequest();
 

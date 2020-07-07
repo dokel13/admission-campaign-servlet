@@ -30,22 +30,20 @@ public class AuthFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-
         Role role = (Role) httpRequest.getSession().getAttribute("role");
         Role allowedRole = rolesAllowedURIs.get(httpRequest.getRequestURI());
         if (allowedRole == null || allowedRole == role) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect("redirect:/admission/api/home?" + httpRequest.getQueryString());
-
-            return;
+            ((HttpServletResponse) servletResponse).sendRedirect("redirect:/admission/api/home?" +
+                    httpRequest.getQueryString());
         }
     }
 
     @Override
     public void destroy() {
-
     }
 }

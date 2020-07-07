@@ -14,8 +14,7 @@ public class PaginationFilter implements Filter {
     private static final String QUERY_STRING = "%s?%s";
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
@@ -36,6 +35,5 @@ public class PaginationFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }

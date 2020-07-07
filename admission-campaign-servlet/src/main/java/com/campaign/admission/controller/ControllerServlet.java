@@ -17,7 +17,7 @@ public class ControllerServlet extends HttpServlet {
     private static final Map<String, Command> COMMANDS = new HashMap<>();
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         UserDao userDao = new UserDaoImpl();
         ExamDao examDao = new ExamDaoImpl();
         ApplicationDao applicationDao = new ApplicationDaoImpl();
@@ -38,7 +38,7 @@ public class ControllerServlet extends HttpServlet {
         COMMANDS.put("student/specialty", new SpecialtyCommand(studentService));
         COMMANDS.put("student/specialty/apply", new SpecialtyApplyCommand(studentService));
         COMMANDS.put("student/rating", new RatingCommand(studentService));
-        COMMANDS.put("student/results", new ResultCommand(studentService));
+        COMMANDS.put("student/results", new ResultsCommand(studentService));
         COMMANDS.put("admin", new AdminHomeCommand(adminService));
         COMMANDS.put("admin/set_admission", new AdmissionCommand(adminService));
         COMMANDS.put("admin/subject", new SubjectCommand(adminService));

@@ -16,6 +16,8 @@ public class TestHttpServletRequest {
 
     private String queryString;
 
+    private String[] parameterValues = new String[0];
+
     public void setParameter(String s, String v) {
         parameters.put(s, v);
     }
@@ -37,7 +39,11 @@ public class TestHttpServletRequest {
     }
 
     public String[] getParameterValues(String s) {
-        return new String[0];
+        return parameterValues;
+    }
+
+    public void setParameterValues(String[] parameterValues) {
+        this.parameterValues = parameterValues;
     }
 
     public HttpServletRequest getRequest(HttpSession session) {

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import static com.campaign.admission.domain.Exam.builder;
 
-public class ExamMapper implements Mapper {
+public class ExamMapper implements Mapper<Exam> {
 
     @Override
     public Exam map(ResultSet resultSet) throws SQLException {

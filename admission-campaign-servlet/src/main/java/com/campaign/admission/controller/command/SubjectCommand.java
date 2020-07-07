@@ -26,7 +26,7 @@ public class SubjectCommand implements Command {
     public String execute(HttpServletRequest request) {
         String subject = request.getQueryString().replaceAll(QUERY_STRING, "");
         int page = parseInt(ofNullable(request.getParameter("page")).orElse("1"));
-        int pagesCount = countPages(PAGE_SIZE, adminService.countExamsBySubject(subject));
+        int pagesCount = countPages(PAGE_SIZE, adminService.countBySubjectAndApplicationIsNull(subject));
         if (page > pagesCount) {
 
             return "redirect:/admission/api/admin/subject?" + request.getQueryString()

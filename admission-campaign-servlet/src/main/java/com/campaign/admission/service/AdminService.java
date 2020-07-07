@@ -12,7 +12,7 @@ public interface AdminService {
 
     List<Exam> getExamsPaginated(String subject, Integer page, Integer pageSize);
 
-    Integer countExamsBySubject(String subject);
+    Integer countBySubjectAndApplicationIsNull(String subject);
 
     void saveMarks(String subject, String[] emails, String[] marks);
 

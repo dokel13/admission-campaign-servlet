@@ -56,7 +56,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Integer countExamsBySubject(String subject) {
+    public Integer countBySubjectAndApplicationIsNull(String subject) {
         return examDao.findExamsCountBySubject(subject);
     }
 

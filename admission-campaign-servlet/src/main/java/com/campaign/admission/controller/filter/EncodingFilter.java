@@ -8,7 +8,7 @@ public class EncodingFilter implements Filter {
     private String encoding;
 
     @Override
-    public void init(FilterConfig config) throws ServletException {
+    public void init(FilterConfig config) {
         this.encoding = config.getInitParameter("defaultEncoding");
     }
 

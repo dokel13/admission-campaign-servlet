@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.campaign.admission.domain.Specialty.builder;
 
-public class SpecialtyMapper implements Mapper {
+public class SpecialtyMapper implements Mapper<Specialty> {
 
     @Override
     public Specialty map(ResultSet resultSet) throws SQLException {

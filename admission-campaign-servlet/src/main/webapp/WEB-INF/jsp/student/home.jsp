@@ -52,7 +52,7 @@
                     <td colspan = "2"><a class="button-2" href="${pageContext.request.contextPath}/api/student/rating?page=1&locale=${sessionScope.locale}"
                         title="${rating_message}">${rating}<br><span class="symbol">&#10532;</span></a></td>
                 </tr>
-            <table>
+            </table>
         </div>
         <fmt:message var="results_message" key="results.message" bundle="${application}"/>
         <a class="results" href="${pageContext.request.contextPath}/api/student/results?locale=${sessionScope.locale}" title="${results_message}">

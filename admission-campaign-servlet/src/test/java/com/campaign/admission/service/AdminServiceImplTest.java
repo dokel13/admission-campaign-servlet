@@ -105,7 +105,7 @@ public class AdminServiceImplTest {
     public void countExamsBySubjectShouldReturnCount() {
         int count = 3;
         when(examDao.findExamsCountBySubject(subject)).thenReturn(count);
-        assertThat(adminService.countExamsBySubject(subject), is(count));
+        assertThat(adminService.countBySubjectAndApplicationIsNull(subject), is(count));
 
         verify(examDao).findExamsCountBySubject(subject);
     }

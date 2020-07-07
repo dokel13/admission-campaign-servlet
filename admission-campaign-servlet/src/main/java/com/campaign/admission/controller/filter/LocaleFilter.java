@@ -17,19 +17,22 @@ public class LocaleFilter implements Filter {
     private static final Map<String, Locale> LOCALES = new HashMap<>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         LOCALES.put("en", new Locale("en"));
         LOCALES.put("ua", new Locale("ua"));
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-        Locale locale = LOCALES.get(httpRequest.getParameter("locale"));
-        if(locale == null) {
-            String redirectURI = httpRequest.getRequestURI() + "?";
-            if(httpRequest.getParameterMap().size() > 0) {
-                redirectURI = format(QUERY_STRING, redirectURI + httpRequest.getQueryString(), DEFAULT_LOCALE_PARAMETER);
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        Locale locale = LOCALES.get(request.getParameter("locale"));
+        if (locale == null) {
+            String redirectURI = request.getRequestURI() + "?";
+            if (request.getParameter("locale") != null) {
+                redirectURI += request.getQueryString()
+                        .replace("locale=" + request.getParameter("locale"), DEFAULT_LOCALE_PARAMETER);
+            } else if (request.getParameterMap().size() > 0) {
+                redirectURI = format(QUERY_STRING, redirectURI + request.getQueryString(), DEFAULT_LOCALE_PARAMETER);
             } else {
                 redirectURI += DEFAULT_LOCALE_PARAMETER;
             }
@@ -44,6 +47,5 @@ public class LocaleFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }

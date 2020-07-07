@@ -10,7 +10,7 @@ import static com.campaign.admission.util.UserValidator.validatePassword;
 
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;

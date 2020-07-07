@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import static com.campaign.admission.domain.User.builder;
 
-public class UserMapper implements Mapper {
+public class UserMapper implements Mapper<User> {
 
     @Override
     public User map(ResultSet resultSet) throws SQLException {

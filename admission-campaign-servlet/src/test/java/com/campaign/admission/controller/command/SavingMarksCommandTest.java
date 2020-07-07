@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,12 +32,23 @@ public class SavingMarksCommandTest {
     private final TestHttpServletRequest request = new TestHttpServletRequest();
 
     @Test
-    public void executeShouldRedirectSubject() {
+    public void executeShouldSaveAndRedirectSubject() {
         String query = "query";
         request.setQueryString(query);
         assertThat(savingMarksCommand.execute(request.getRequest(session)),
                 is("redirect:/admission/api/admin/subject?" + query));
 
         verify(adminService).saveMarks(any(String.class), any(String[].class), any(String[].class));
+    }
+
+    @Test
+    public void executeShouldRedirectSubject() {
+        String query = "query";
+        request.setQueryString(query);
+        request.setParameterValues(null);
+        assertThat(savingMarksCommand.execute(request.getRequest(session)),
+                is("redirect:/admission/api/admin/subject?" + query));
+
+        Mockito.verify(adminService, never()).saveMarks(any(String.class), any(String[].class), any(String[].class));
     }
 }

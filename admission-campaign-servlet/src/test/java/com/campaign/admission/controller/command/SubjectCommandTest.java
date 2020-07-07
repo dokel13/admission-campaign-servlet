@@ -35,7 +35,7 @@ public class SubjectCommandTest {
         assertThat(subjectCommand.execute(request.getRequest(any(HttpSession.class))),
                 is("redirect:/admission/api/admin/subject?" + resultQuery));
 
-        verify(adminService).countExamsBySubject("subject");
+        verify(adminService).countBySubjectAndApplicationIsNull("subject");
     }
 
     @Test
@@ -46,7 +46,7 @@ public class SubjectCommandTest {
         assertThat(subjectCommand.execute(request.getRequest(any(HttpSession.class))),
                 is("/WEB-INF/jsp/admin/subject.jsp"));
 
-        verify(adminService).countExamsBySubject(query);
+        verify(adminService).countBySubjectAndApplicationIsNull(query);
         verify(adminService).getExamsPaginated(query, 0, 3);
     }
 }

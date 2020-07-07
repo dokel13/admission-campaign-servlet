@@ -48,6 +48,13 @@ INSERT INTO `users` VALUES (12,2,'ihor@gmail.com','VsyX�3�Ajԛ݂�5','Ihor
 INSERT INTO `users` VALUES (13,2,'yoakym@ukr.net','�-xE-�޽5P�/�','Йоаким','Йоакимович');
 INSERT INTO `users` VALUES (14,2,'kuzma@gmail.com','z\Z��yẋC�O6�','Kuzma','Kuzmenko');
 INSERT INTO `users` VALUES (15,2,'lavrentii@ukr.net','�6��ȶ|TdiыK5','Лаврентій','Лаврентович');
+INSERT INTO `users` VALUES (16,2,'max@gmail.com','/�Nw2]�qR�n��Q','Max','Maxwell');
+INSERT INTO `users`	VALUES (17,2,'nazar@ukr.net','�q���KH����6�','Назар','Назаренко');
+INSERT INTO `users`	VALUES (18,2,'ostap@gmail.com','��/╃��2����[','Ostap','Ostapenko');
+INSERT INTO `users`	VALUES (19,2,'pylyp@ukr.net','��d76N�4�oӀ','Пилип','Пилипчук');
+INSERT INTO `users`	VALUES (20,2,'rick@gmail.com','�%�F����Q�eʡ4�','Rick','Grimes');
+INSERT INTO `users`	VALUES (21,2,'severyn@ukr.net','gǿH�ď��F�7x_','Северин','Наливайко');
+INSERT INTO `users`	VALUES (22,2,'tommy@gmail.com','e��k�z����mM$','Tommy','Wiseau');
 
 INSERT INTO `exams` VALUES (1,2,4,NULL);
 INSERT INTO `exams` VALUES (2,2,5,NULL);
@@ -98,6 +105,32 @@ INSERT INTO `exams` VALUES (46,14,3,180);
 INSERT INTO `exams` VALUES (47,15,1,183);
 INSERT INTO `exams` VALUES (48,15,2,180);
 INSERT INTO `exams` VALUES (49,15,3,180);
+INSERT INTO `exams` VALUES (50,8,4,NULL);
+INSERT INTO `exams` VALUES (51,16,5,NULL);
+INSERT INTO `exams` VALUES (52,16,1,NULL);
+INSERT INTO `exams` VALUES (53,16,2,NULL);
+INSERT INTO `exams` VALUES (54,17,5,NULL);
+INSERT INTO `exams` VALUES (55,17,1,NULL);
+INSERT INTO `exams` VALUES (56,17,2,NULL);
+INSERT INTO `exams` VALUES (57,17,3,NULL);
+INSERT INTO `exams` VALUES (58,18,1,NULL);
+INSERT INTO `exams` VALUES (59,18,2,NULL);
+INSERT INTO `exams` VALUES (60,18,3,NULL);
+INSERT INTO `exams` VALUES (61,19,1,NULL);
+INSERT INTO `exams` VALUES (62,19,2,NULL);
+INSERT INTO `exams` VALUES (63,19,3,NULL);
+INSERT INTO `exams` VALUES (64,20,4,NULL);
+INSERT INTO `exams` VALUES (65,20,1,NULL);
+INSERT INTO `exams` VALUES (66,20,2,NULL);
+INSERT INTO `exams` VALUES (67,20,3,NULL);
+INSERT INTO `exams` VALUES (68,21,5,NULL);
+INSERT INTO `exams` VALUES (69,21,1,NULL);
+INSERT INTO `exams` VALUES (70,21,2,NULL);
+INSERT INTO `exams` VALUES (71,21,3,NULL);
+INSERT INTO `exams` VALUES (72,22,4,NULL);
+INSERT INTO `exams` VALUES (73,22,1,NULL);
+INSERT INTO `exams` VALUES (74,22,2,NULL);
+INSERT INTO `exams` VALUES (75,22,3,NULL);
 
 INSERT INTO `applications` VALUES (1,2,1,0,526);
 INSERT INTO `applications` VALUES (2,3,1,0,522);

@@ -18,7 +18,7 @@ public class AdmissionValidator {
                     break;
                 }
             }
-            if ((exam == null) || exam.getMark() < requirement.getMark()) {
+            if ((exam == null) || exam.getMark() == null || exam.getMark() < requirement.getMark()) {
                 throw new AdmissionValidatorRuntimeException("Insufficient marks for specialty admission!");
             } else {
                 result += exam.getMark();
