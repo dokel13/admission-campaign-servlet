@@ -1,0 +1,6 @@
+INSERT INTO `admission_campaign_servlet`.`specialties` (`specialty_id`, `specialty`, `max_student_amount`, `open`) VALUES ('1', 'telecomunications', '20', b'1');
+INSERT INTO `admission_campaign_servlet`.`specialties` (`specialty_id`, `specialty`, `max_student_amount`, `open`) VALUES ('2', 'linguistics', '30', b'1');
+INSERT INTO `admission_campaign_servlet`.`specialties` (`specialty_id`, `specialty`, `max_student_amount`, `open`) VALUES ('3', 'philosophy', '30', b'1');
+INSERT INTO `admission_campaign_servlet`.`specialties` (`specialty_id`, `specialty`, `max_student_amount`, `open`) VALUES ('4', 'computer.technology', '20', b'1');
+INSERT INTO `admission_campaign_servlet`.`specialties` (`specialty_id`, `specialty`, `max_student_amount`, `open`) VALUES ('5', 'mech.math', '20', b'1');
+INSERT INTO `admission_campaign_servlet`.`specialties` (`specialty_id`, `specialty`, `max_student_amount`, `open`) VALUES ('6', 'electronics', '10', b'1');

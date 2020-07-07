@@ -1,7 +1,6 @@
 package com.campaign.admission.controller.command;
 
 import com.campaign.admission.domain.Role;
-import com.campaign.admission.util.EncryptionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
