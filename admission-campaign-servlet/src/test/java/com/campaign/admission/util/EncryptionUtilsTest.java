@@ -11,7 +11,7 @@ public class EncryptionUtilsTest {
     @Test
     public void encryptShouldReturnEncryptedPassword() {
         String actual = encrypt("password");
-        String expected = "_M�;Z�e�\u001D�'\u07B8�ϙ";
+        String expected = encrypt("password");
 
         assertThat(actual, is(expected));
     }

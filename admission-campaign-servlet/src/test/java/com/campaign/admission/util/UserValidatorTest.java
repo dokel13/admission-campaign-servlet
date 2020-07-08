@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static com.campaign.admission.domain.User.builder;
+import static com.campaign.admission.util.EncryptionUtils.encrypt;
 import static com.campaign.admission.util.UserValidator.validateEmail;
 import static com.campaign.admission.util.UserValidator.validatePassword;
 import static org.junit.rules.ExpectedException.none;
@@ -17,7 +18,7 @@ public class UserValidatorTest {
     public ExpectedException expectedException = none();
 
     private final User user = builder()
-            .withPassword("_M�;Z�e�\u001D�'\u07B8�ϙ")
+            .withPassword(encrypt("password"))
             .build();
 
     private final User userCheck = builder()

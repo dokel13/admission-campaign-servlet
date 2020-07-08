@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static com.campaign.admission.domain.User.builder;
+import static com.campaign.admission.util.EncryptionUtils.encrypt;
 import static java.util.Optional.of;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -40,7 +41,7 @@ public class UserServiceImplTest {
 
     private final User existingUser = builder()
             .withEmail("email@mail.ua")
-            .withPassword("_M�;Z�e�\u001D�'\u07B8�ϙ")
+            .withPassword(encrypt("password"))
             .withRole(Role.STUDENT)
             .build();
 
@@ -65,7 +66,7 @@ public class UserServiceImplTest {
 
     @Test
     public void registerShouldReturnUser() {
-        when(userDao.save(existingUser)).thenReturn(existingUser);
+        when(userDao.save(enteringUser)).thenReturn(existingUser);
         assertThat(userService.register(enteringUser), is(existingUser));
 
         verify(userDao).findByEmail(enteringUser.getEmail());
