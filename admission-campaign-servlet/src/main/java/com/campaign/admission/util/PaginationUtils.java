@@ -1,6 +1,6 @@
 package com.campaign.admission.util;
 
-public class PaginationUtils {
+public final class PaginationUtils {
 
     public static Integer countPages(Integer pageSize, Integer examsCount) {
         int pagesCount;

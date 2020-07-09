@@ -6,7 +6,7 @@ import com.campaign.admission.exception.AdmissionValidatorRuntimeException;
 
 import java.util.List;
 
-public class AdmissionValidator {
+public final class AdmissionValidator {
 
     public static Integer validateMarks(List<Exam> exams, List<Requirement> requirements) {
         int result = 0;

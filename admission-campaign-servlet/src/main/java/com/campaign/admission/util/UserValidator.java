@@ -5,7 +5,7 @@ import com.campaign.admission.exception.UserValidatorRuntimeException;
 
 import static com.campaign.admission.util.EncryptionUtils.encrypt;
 
-public class UserValidator {
+public final class UserValidator {
 
     private static final String EMAIL_REGEX = "^\\w+@\\D+\\.\\D+$";
 

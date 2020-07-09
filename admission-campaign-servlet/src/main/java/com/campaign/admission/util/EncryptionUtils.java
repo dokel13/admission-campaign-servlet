@@ -5,7 +5,7 @@ import com.campaign.admission.exception.EncryptorRuntimeException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class EncryptionUtils {
+public final class EncryptionUtils {
 
     public static String encrypt(String value) {
         try {
