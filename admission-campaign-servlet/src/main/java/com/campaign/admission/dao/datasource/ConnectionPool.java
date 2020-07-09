@@ -12,7 +12,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class ConnectionPool {
 
-    private static Logger LOGGER = getLogger(ConnectionPool.class);
+    private static final Logger LOGGER = getLogger(ConnectionPool.class);
 
     private final BasicDataSource dataSource;
 

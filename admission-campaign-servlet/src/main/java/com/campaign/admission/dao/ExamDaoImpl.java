@@ -103,7 +103,7 @@ public class ExamDaoImpl extends AbstractDao<Exam> implements ExamDao {
 
             statement.setString(1, subject);
 
-            return getIntResult(statement.executeQuery(), "count");
+            return getCount(statement.executeQuery());
         } catch (SQLException exception) {
             String exceptionMessage = "Finding exams count by subject operation exception!";
             LOGGER.error(exceptionMessage);

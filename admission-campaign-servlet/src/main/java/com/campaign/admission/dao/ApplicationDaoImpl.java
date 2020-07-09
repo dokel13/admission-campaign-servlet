@@ -75,7 +75,7 @@ public class ApplicationDaoImpl extends AbstractDao<Application> implements Appl
 
             statement.setString(1, specialty);
 
-            return getIntResult(statement.executeQuery(), "count");
+            return getCount(statement.executeQuery());
         } catch (SQLException exception) {
             String exceptionMessage = "Finding applications count by specialty operation exception!";
             LOGGER.error(exceptionMessage);

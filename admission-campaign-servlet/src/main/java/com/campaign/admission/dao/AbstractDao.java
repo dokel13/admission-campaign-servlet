@@ -19,6 +19,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public abstract class AbstractDao<T> {
 
+    private static final String COUNT = "count";
+
     protected static final Logger LOGGER = getLogger(ConnectionPool.class);
 
     private final ConnectionPool connectionPool;
@@ -57,9 +59,9 @@ public abstract class AbstractDao<T> {
         return result;
     }
 
-    protected Integer getIntResult(ResultSet resultSet, String column) throws SQLException {
+    protected Integer getCount(ResultSet resultSet) throws SQLException {
         if (resultSet.next()) {
-            return resultSet.getInt(column);
+            return resultSet.getInt(COUNT);
         }
 
         return 0;
